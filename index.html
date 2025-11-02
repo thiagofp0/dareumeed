@@ -1,0 +1,1080 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dareumeed - Assistência Cristã Internacional</title>
+    <style>
+        /* Reset e estilos gerais */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        :root {
+            --primary: #1a5276;
+            --secondary: #e67e22;
+            --accent: #2e86c1;
+            --light: #f8f9fa;
+            --dark: #2c3e50;
+            --success: #27ae60;
+        }
+        
+        body {
+            background-color: #f5f7fa;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+        
+        /* Header e Navegação */
+        header {
+            background-color: var(--primary);
+            color: white;
+            padding: 1rem 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo i {
+            margin-right: 10px;
+            color: var(--secondary);
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+            align-items: center;
+        }
+        
+        nav ul li {
+            margin-left: 1.5rem;
+        }
+        
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+            padding: 5px 0;
+            position: relative;
+        }
+        
+        nav ul li a:hover {
+            color: var(--secondary);
+        }
+        
+        nav ul li a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--secondary);
+            transition: width 0.3s;
+        }
+        
+        nav ul li a:hover::after {
+            width: 100%;
+        }
+        
+        .language-selector {
+            display: flex;
+            align-items: center;
+            margin-left: 1rem;
+        }
+        
+        .language-btn {
+            background: transparent;
+            border: 1px solid rgba(255,255,255,0.3);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            transition: all 0.3s;
+        }
+        
+        .language-btn:hover {
+            background: rgba(255,255,255,0.1);
+            border-color: var(--secondary);
+        }
+        
+        .language-btn i {
+            margin-right: 5px;
+        }
+        
+        .mobile-menu {
+            display: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+        
+        /* Seções Gerais */
+        section {
+            padding: 5rem 0;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+            position: relative;
+        }
+        
+        .section-title h2 {
+            font-size: 2.2rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background-color: var(--secondary);
+        }
+        
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(rgba(26, 82, 118, 0.8), rgba(26, 82, 118, 0.9)), url('https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80') no-repeat center center/cover;
+            color: white;
+            text-align: center;
+            padding: 10rem 0 5rem;
+            margin-top: 70px;
+        }
+        
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1.5rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto 2rem;
+        }
+        
+        .btn {
+            display: inline-block;
+            background-color: var(--secondary);
+            color: white;
+            padding: 12px 30px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+        
+        .btn:hover {
+            background-color: #d35400;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        /* Sobre Nós */
+        .about-content {
+            display: flex;
+            align-items: center;
+            gap: 3rem;
+        }
+        
+        .about-text {
+            flex: 1;
+        }
+        
+        .about-image {
+            flex: 1;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+        
+        .about-image img {
+            width: 100%;
+            height: auto;
+            display: block;
+            transition: transform 0.5s;
+        }
+        
+        .about-image:hover img {
+            transform: scale(1.05);
+        }
+        
+        /* Missão */
+        .mission {
+            background-color: var(--light);
+        }
+        
+        .mission-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        
+        .mission-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            text-align: center;
+            transition: transform 0.3s;
+        }
+        
+        .mission-card:hover {
+            transform: translateY(-10px);
+        }
+        
+        .mission-card i {
+            font-size: 3rem;
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+        }
+        
+        .mission-card h3 {
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+        
+        /* Doações */
+        .donation-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+        
+        .donation-card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            text-align: center;
+            transition: transform 0.3s;
+        }
+        
+        .donation-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .donation-header {
+            background-color: var(--primary);
+            color: white;
+            padding: 1.5rem;
+        }
+        
+        .donation-body {
+            padding: 2rem;
+        }
+        
+        .donation-amount {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin: 1rem 0;
+        }
+        
+        .donation-features {
+            list-style: none;
+            margin: 1.5rem 0;
+        }
+        
+        .donation-features li {
+            padding: 8px 0;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .donation-features li:last-child {
+            border-bottom: none;
+        }
+        
+        .donation-form {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+            transition: border 0.3s;
+        }
+        
+        .form-control:focus {
+            border-color: var(--accent);
+            outline: none;
+        }
+        
+        /* Boletim */
+        .newsletter {
+            background-color: var(--light);
+        }
+        
+        .newsletter-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .newsletter-form {
+            display: flex;
+            margin-bottom: 3rem;
+        }
+        
+        .newsletter-form input {
+            flex: 1;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px 0 0 5px;
+            font-size: 1rem;
+        }
+        
+        .newsletter-form button {
+            border-radius: 0 5px 5px 0;
+        }
+        
+        .blog-posts {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        
+        .blog-post {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+        
+        .blog-image {
+            height: 200px;
+            overflow: hidden;
+        }
+        
+        .blog-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+        
+        .blog-post:hover .blog-image img {
+            transform: scale(1.05);
+        }
+        
+        .blog-content {
+            padding: 1.5rem;
+        }
+        
+        .blog-date {
+            color: #777;
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .blog-title {
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+        
+        .blog-excerpt {
+            margin-bottom: 1rem;
+        }
+        
+        .read-more {
+            color: var(--accent);
+            text-decoration: none;
+            font-weight: 500;
+            display: inline-flex;
+            align-items: center;
+        }
+        
+        .read-more i {
+            margin-left: 5px;
+            transition: transform 0.3s;
+        }
+        
+        .read-more:hover i {
+            transform: translateX(5px);
+        }
+        
+        .load-more {
+            text-align: center;
+            margin-top: 3rem;
+        }
+        
+        /* Footer */
+        footer {
+            background-color: var(--dark);
+            color: white;
+            padding: 4rem 0 2rem;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .footer-column h3 {
+            font-size: 1.3rem;
+            margin-bottom: 1.5rem;
+            position: relative;
+            padding-bottom: 10px;
+        }
+        
+        .footer-column h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 2px;
+            background-color: var(--secondary);
+        }
+        
+        .footer-links {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+        
+        .footer-links a {
+            color: #bbb;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-links a:hover {
+            color: var(--secondary);
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+        
+        .social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background-color: rgba(255,255,255,0.1);
+            border-radius: 50%;
+            color: white;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+        
+        .social-links a:hover {
+            background-color: var(--secondary);
+            transform: translateY(-3px);
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            color: #bbb;
+            font-size: 0.9rem;
+        }
+        
+        /* Responsividade */
+        @media (max-width: 992px) {
+            .about-content {
+                flex-direction: column;
+            }
+            
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .mobile-menu {
+                display: block;
+            }
+            
+            nav {
+                position: fixed;
+                top: 70px;
+                left: -100%;
+                width: 80%;
+                height: calc(100vh - 70px);
+                background-color: var(--primary);
+                transition: left 0.3s;
+                padding: 2rem;
+            }
+            
+            nav.active {
+                left: 0;
+            }
+            
+            nav ul {
+                flex-direction: column;
+            }
+            
+            nav ul li {
+                margin: 1rem 0;
+            }
+            
+            .language-selector {
+                margin-left: 0;
+                margin-top: 1rem;
+            }
+            
+            .hero {
+                padding: 8rem 0 4rem;
+            }
+            
+            .hero h1 {
+                font-size: 2rem;
+            }
+            
+            .newsletter-form {
+                flex-direction: column;
+            }
+            
+            .newsletter-form input {
+                border-radius: 5px;
+                margin-bottom: 1rem;
+            }
+            
+            .newsletter-form button {
+                border-radius: 5px;
+                width: 100%;
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container header-content">
+            <div class="logo">
+                <i class="fas fa-hands-helping"></i>
+                <span>Dareumeed</span>
+            </div>
+            <div class="mobile-menu">
+                <i class="fas fa-bars"></i>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="#home" data-pt="Início" data-en="Home">Início</a></li>
+                    <li><a href="#about" data-pt="Sobre Nós" data-en="About Us">Sobre Nós</a></li>
+                    <li><a href="#mission" data-pt="Nossa Missão" data-en="Our Mission">Nossa Missão</a></li>
+                    <li><a href="#donate" data-pt="Doações" data-en="Donations">Doações</a></li>
+                    <li><a href="#newsletter" data-pt="Boletim" data-en="Newsletter">Boletim</a></li>
+                    <li class="language-selector">
+                        <button class="language-btn" id="languageToggle">
+                            <i class="fas fa-globe"></i>
+                            <span data-pt="EN" data-en="PT">EN</span>
+                        </button>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="container">
+            <h1 data-pt="Dareumeed - Esperança em Ação" data-en="Dareumeed - Hope in Action">Dareumeed - Esperança em Ação</h1>
+            <p data-pt="Uma organização cristã dedicada a levar assistência, esperança e o amor de Cristo para comunidades vulneráveis ao redor do mundo." data-en="A Christian organization dedicated to bringing assistance, hope, and the love of Christ to vulnerable communities around the world.">Uma organização cristã dedicada a levar assistência, esperança e o amor de Cristo para comunidades vulneráveis ao redor do mundo.</p>
+            <a href="#donate" class="btn" data-pt="Faça uma Doação" data-en="Make a Donation">Faça uma Doação</a>
+        </div>
+    </section>
+
+    <!-- Sobre Nós -->
+    <section id="about">
+        <div class="container">
+            <div class="section-title">
+                <h2 data-pt="Sobre Nós" data-en="About Us">Sobre Nós</h2>
+                <p data-pt="Conheça a história e os valores da Dareumeed" data-en="Learn about Dareumeed's history and values">Conheça a história e os valores da Dareumeed</p>
+            </div>
+            <div class="about-content">
+                <div class="about-text">
+                    <p data-pt="Fundada em 2010, a Dareumeed nasceu do chamado para servir aos mais necessitados, seguindo o exemplo de Jesus Cristo. Nosso nome, que significa 'esperança' em urdu, reflete nosso compromisso de levar esperança às comunidades mais vulneráveis ao redor do mundo." data-en="Founded in 2010, Dareumeed was born from the call to serve those most in need, following the example of Jesus Christ. Our name, which means 'hope' in Urdu, reflects our commitment to bringing hope to the most vulnerable communities around the world.">Fundada em 2010, a Dareumeed nasceu do chamado para servir aos mais necessitados, seguindo o exemplo de Jesus Cristo. Nosso nome, que significa 'esperança' em urdu, reflete nosso compromisso de levar esperança às comunidades mais vulneráveis ao redor do mundo.</p>
+                    <p data-pt="Atuamos em mais de 15 países, focando em regiões onde a fé cristã é perseguida e onde as necessidades humanitárias são mais urgentes. Nossa equipe é formada por voluntários dedicados e profissionais comprometidos com a transformação de vidas através do amor prático." data-en="We work in more than 15 countries, focusing on regions where the Christian faith is persecuted and where humanitarian needs are most urgent. Our team consists of dedicated volunteers and professionals committed to transforming lives through practical love.">Atuamos em mais de 15 países, focando em regiões onde a fé cristã é perseguida e onde as necessidades humanitárias são mais urgentes. Nossa equipe é formada por voluntários dedicados e profissionais comprometidos com a transformação de vidas através do amor prático.</p>
+                    <p data-pt="Acreditamos que a fé sem obras é morta, e por isso unimos a proclamação do Evangelho com ações concretas de assistência, desenvolvimento comunitário e defesa dos direitos humanos." data-en="We believe that faith without works is dead, which is why we combine the proclamation of the Gospel with concrete actions of assistance, community development, and defense of human rights.">Acreditamos que a fé sem obras é morta, e por isso unimos a proclamação do Evangelho com ações concretas de assistência, desenvolvimento comunitário e defesa dos direitos humanos.</p>
+                </div>
+                <div class="about-image">
+                    <img src="https://images.unsplash.com/photo-1559027615-cd4628902d4a?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Equipe Dareumeed">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Nossa Missão -->
+    <section class="mission" id="mission">
+        <div class="container">
+            <div class="section-title">
+                <h2 data-pt="Nossa Missão" data-en="Our Mission">Nossa Missão</h2>
+                <p data-pt="Os pilares que guiam nosso trabalho" data-en="The pillars that guide our work">Os pilares que guiam nosso trabalho</p>
+            </div>
+            <div class="mission-cards">
+                <div class="mission-card">
+                    <i class="fas fa-cross"></i>
+                    <h3 data-pt="Evangelho e Discipulado" data-en="Gospel and Discipleship">Evangelho e Discipulado</h3>
+                    <p data-pt="Compartilhamos o amor de Cristo e discipulamos novos convertidos em contextos de perseguição, fornecendo Bíblias e literatura cristã." data-en="We share the love of Christ and disciple new converts in contexts of persecution, providing Bibles and Christian literature.">Compartilhamos o amor de Cristo e discipulamos novos convertidos em contextos de perseguição, fornecendo Bíblias e literatura cristã.</p>
+                </div>
+                <div class="mission-card">
+                    <i class="fas fa-hand-holding-heart"></i>
+                    <h3 data-pt="Assistência Humanitária" data-en="Humanitarian Assistance">Assistência Humanitária</h3>
+                    <p data-pt="Fornecemos ajuda emergencial em situações de crise, incluindo alimentos, abrigo, cuidados médicos e apoio psicossocial." data-en="We provide emergency assistance in crisis situations, including food, shelter, medical care, and psychosocial support.">Fornecemos ajuda emergencial em situações de crise, incluindo alimentos, abrigo, cuidados médicos e apoio psicossocial.</p>
+                </div>
+                <div class="mission-card">
+                    <i class="fas fa-graduation-cap"></i>
+                    <h3 data-pt="Desenvolvimento Comunitário" data-en="Community Development">Desenvolvimento Comunitário</h3>
+                    <p data-pt="Implementamos projetos de longo prazo que promovem a autossuficiência, como educação, capacitação profissional e microcrédito." data-en="We implement long-term projects that promote self-sufficiency, such as education, vocational training, and microcredit.">Implementamos projetos de longo prazo que promovem a autossuficiência, como educação, capacitação profissional e microcrédito.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Doações -->
+    <section id="donate">
+        <div class="container">
+            <div class="section-title">
+                <h2 data-pt="Doações" data-en="Donations">Doações</h2>
+                <p data-pt="Suporte nosso trabalho e transforme vidas" data-en="Support our work and transform lives">Suporte nosso trabalho e transforme vidas</p>
+            </div>
+            
+            <div class="donation-options">
+                <div class="donation-card">
+                    <div class="donation-header">
+                        <h3 data-pt="Doação Única" data-en="One-Time Donation">Doação Única</h3>
+                    </div>
+                    <div class="donation-body">
+                        <div class="donation-amount">R$ 50</div>
+                        <p data-pt="Fornece alimentos para uma família por um mês" data-en="Provides food for a family for one month">Fornece alimentos para uma família por um mês</p>
+                        <ul class="donation-features">
+                            <li data-pt="Alimentação básica" data-en="Basic food">Alimentação básica</li>
+                            <li data-pt="Kit de higiene" data-en="Hygiene kit">Kit de higiene</li>
+                            <li data-pt="Apoio espiritual" data-en="Spiritual support">Apoio espiritual</li>
+                        </ul>
+                        <button class="btn" onclick="selectDonation(50)" data-pt="Doar Agora" data-en="Donate Now">Doar Agora</button>
+                    </div>
+                </div>
+                
+                <div class="donation-card">
+                    <div class="donation-header">
+                        <h3 data-pt="Doação Mensal" data-en="Monthly Donation">Doação Mensal</h3>
+                    </div>
+                    <div class="donation-body">
+                        <div class="donation-amount">R$ 100/mês</div>
+                        <p data-pt="Apoia educação infantil e programas de discipulado" data-en="Supports children's education and discipleship programs">Apoia educação infantil e programas de discipulado</p>
+                        <ul class="donation-features">
+                            <li data-pt="Material escolar" data-en="School supplies">Material escolar</li>
+                            <li data-pt="Aulas de discipulado" data-en="Discipleship classes">Aulas de discipulado</li>
+                            <li data-pt="Acompanhamento familiar" data-en="Family follow-up">Acompanhamento familiar</li>
+                        </ul>
+                        <button class="btn" onclick="selectDonation(100)" data-pt="Doar Mensalmente" data-en="Donate Monthly">Doar Mensalmente</button>
+                    </div>
+                </div>
+                
+                <div class="donation-card">
+                    <div class="donation-header">
+                        <h3 data-pt="Doação Especial" data-en="Special Donation">Doação Especial</h3>
+                    </div>
+                    <div class="donation-body">
+                        <div class="donation-amount">R$ 500</div>
+                        <p data-pt="Financia projetos de geração de renda" data-en="Funds income generation projects">Financia projetos de geração de renda</p>
+                        <ul class="donation-features">
+                            <li data-pt="Microcrédito" data-en="Microcredit">Microcrédito</li>
+                            <li data-pt="Capacitação profissional" data-en="Vocational training">Capacitação profissional</li>
+                            <li data-pt="Ferramentas de trabalho" data-en="Work tools">Ferramentas de trabalho</li>
+                        </ul>
+                        <button class="btn" onclick="selectDonation(500)" data-pt="Doar Agora" data-en="Donate Now">Doar Agora</button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="donation-form">
+                <h3 style="text-align: center; margin-bottom: 1.5rem; color: var(--primary);" data-pt="Formulário de Doação" data-en="Donation Form">Formulário de Doação</h3>
+                <form id="donationForm">
+                    <div class="form-group">
+                        <label for="amount" data-pt="Valor da Doação (R$)" data-en="Donation Amount (R$)">Valor da Doação (R$)</label>
+                        <input type="number" id="amount" class="form-control" data-pt="Digite o valor" data-en="Enter amount" placeholder="Digite o valor" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="name" data-pt="Nome Completo" data-en="Full Name">Nome Completo</label>
+                        <input type="text" id="name" class="form-control" data-pt="Seu nome completo" data-en="Your full name" placeholder="Seu nome completo" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email" data-pt="E-mail" data-en="Email">E-mail</label>
+                        <input type="email" id="email" class="form-control" data-pt="Seu melhor e-mail" data-en="Your best email" placeholder="Seu melhor e-mail" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="payment" data-pt="Forma de Pagamento" data-en="Payment Method">Forma de Pagamento</label>
+                        <select id="payment" class="form-control" required>
+                            <option value="" data-pt="Selecione..." data-en="Select...">Selecione...</option>
+                            <option value="credit" data-pt="Cartão de Crédito" data-en="Credit Card">Cartão de Crédito</option>
+                            <option value="debit" data-pt="Cartão de Débito" data-en="Debit Card">Cartão de Débito</option>
+                            <option value="pix" data-pt="PIX" data-en="PIX">PIX</option>
+                            <option value="boleto" data-pt="Boleto Bancário" data-en="Bank Slip">Boleto Bancário</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn" style="width: 100%;" data-pt="Finalizar Doação" data-en="Complete Donation">Finalizar Doação</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Boletim -->
+    <section class="newsletter" id="newsletter">
+        <div class="container newsletter-container">
+            <div class="section-title">
+                <h2 data-pt="Boletim Mensal" data-en="Monthly Newsletter">Boletim Mensal</h2>
+                <p data-pt="Fique por dentro das nossas atividades e histórias de transformação" data-en="Stay updated on our activities and transformation stories">Fique por dentro das nossas atividades e histórias de transformação</p>
+            </div>
+            
+            <div class="newsletter-form">
+                <input type="email" data-pt="Seu e-mail para receber nosso boletim" data-en="Your email to receive our newsletter" placeholder="Seu e-mail para receber nosso boletim">
+                <button class="btn" data-pt="Inscrever-se" data-en="Subscribe">Inscrever-se</button>
+            </div>
+            
+            <div class="blog-posts" id="blogPosts">
+                <!-- Posts serão carregados aqui via JavaScript -->
+            </div>
+            
+            <div class="load-more">
+                <button class="btn" id="loadMoreBtn" data-pt="Carregar Mais Notícias" data-en="Load More News">Carregar Mais Notícias</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>Dareumeed</h3>
+                    <p data-pt="Levar esperança e assistência prática para comunidades vulneráveis ao redor do mundo, seguindo o exemplo de Jesus Cristo." data-en="Bringing hope and practical assistance to vulnerable communities around the world, following the example of Jesus Christ.">Levar esperança e assistência prática para comunidades vulneráveis ao redor do mundo, seguindo o exemplo de Jesus Cristo.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-column">
+                    <h3 data-pt="Links Rápidos" data-en="Quick Links">Links Rápidos</h3>
+                    <ul class="footer-links">
+                        <li><a href="#home" data-pt="Início" data-en="Home">Início</a></li>
+                        <li><a href="#about" data-pt="Sobre Nós" data-en="About Us">Sobre Nós</a></li>
+                        <li><a href="#mission" data-pt="Nossa Missão" data-en="Our Mission">Nossa Missão</a></li>
+                        <li><a href="#donate" data-pt="Doações" data-en="Donations">Doações</a></li>
+                        <li><a href="#newsletter" data-pt="Boletim" data-en="Newsletter">Boletim</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h3 data-pt="Contato" data-en="Contact">Contato</h3>
+                    <ul class="footer-links">
+                        <li><i class="fas fa-map-marker-alt"></i> Rua da Esperança, 123 - São Paulo, SP</li>
+                        <li><i class="fas fa-phone"></i> (11) 3456-7890</li>
+                        <li><i class="fas fa-envelope"></i> contato@dareumeed.org</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                <p data-pt="&copy; 2023 Dareumeed - Todos os direitos reservados" data-en="&copy; 2023 Dareumeed - All rights reserved">&copy; 2023 Dareumeed - Todos os direitos reservados</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Configuração de idioma
+        let currentLanguage = 'pt';
+        
+        // Função para alternar idioma
+        function toggleLanguage() {
+            currentLanguage = currentLanguage === 'pt' ? 'en' : 'pt';
+            updateLanguage();
+            
+            // Atualizar texto do botão
+            const languageToggle = document.getElementById('languageToggle');
+            const languageText = languageToggle.querySelector('span');
+            languageText.textContent = currentLanguage === 'pt' ? 'EN' : 'PT';
+        }
+        
+        // Função para atualizar todo o conteúdo com o idioma selecionado
+        function updateLanguage() {
+            // Atualizar elementos com atributos data-pt e data-en
+            const translatableElements = document.querySelectorAll('[data-pt]');
+            translatableElements.forEach(element => {
+                element.textContent = element.getAttribute(`data-${currentLanguage}`);
+            });
+            
+            // Atualizar placeholders
+            const translatableInputs = document.querySelectorAll('input[data-pt], select[data-pt]');
+            translatableInputs.forEach(input => {
+                input.placeholder = input.getAttribute(`data-${currentLanguage}`);
+            });
+            
+            // Atualizar opções do select
+            const translatableOptions = document.querySelectorAll('option[data-pt]');
+            translatableOptions.forEach(option => {
+                option.textContent = option.getAttribute(`data-${currentLanguage}`);
+            });
+            
+            // Atualizar o atributo lang do HTML
+            document.documentElement.lang = currentLanguage;
+        }
+        
+        // Menu Mobile
+        const mobileMenu = document.querySelector('.mobile-menu');
+        const nav = document.querySelector('nav');
+        
+        mobileMenu.addEventListener('click', () => {
+            nav.classList.toggle('active');
+        });
+        
+        // Fechar menu ao clicar em um link
+        const navLinks = document.querySelectorAll('nav a');
+        navLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                nav.classList.remove('active');
+            });
+        });
+        
+        // Selecionar valor de doação
+        function selectDonation(amount) {
+            document.getElementById('amount').value = amount;
+            document.getElementById('donate').scrollIntoView({ behavior: 'smooth' });
+        }
+        
+        // Formulário de doação
+        document.getElementById('donationForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const message = currentLanguage === 'pt' 
+                ? 'Obrigado pela sua doação! Em breve enviaremos um e-mail com as instruções para finalizar o pagamento.'
+                : 'Thank you for your donation! We will soon send an email with instructions to complete the payment.';
+            alert(message);
+            this.reset();
+        });
+        
+        // Dados do boletim (simulando um banco de dados)
+        const blogPosts = [
+            {
+                id: 1,
+                title: {
+                    pt: "Nova Escola Inaugurada na África Oriental",
+                    en: "New School Inaugurated in East Africa"
+                },
+                excerpt: {
+                    pt: "Graças às doações de nossos parceiros, inauguramos uma nova escola que atenderá mais de 200 crianças em uma região remota da África Oriental.",
+                    en: "Thanks to donations from our partners, we inaugurated a new school that will serve more than 200 children in a remote region of East Africa."
+                },
+                date: {
+                    pt: "15 de Outubro, 2023",
+                    en: "October 15, 2023"
+                },
+                image: "https://images.unsplash.com/photo-1497636577773-f1231844b336?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80"
+            },
+            {
+                id: 2,
+                title: {
+                    pt: "Distribuição de Bíblias em Área de Perseguição",
+                    en: "Bible Distribution in Persecution Area"
+                },
+                excerpt: {
+                    pt: "Nossa equipe conseguiu distribuir mais de 5.000 Bíblias em uma região de alta perseguição religiosa, fortalecendo a fé de milhares de cristãos.",
+                    en: "Our team managed to distribute more than 5,000 Bibles in a region of high religious persecution, strengthening the faith of thousands of Christians."
+                },
+                date: {
+                    pt: "2 de Outubro, 2023",
+                    en: "October 2, 2023"
+                },
+                image: "https://images.unsplash.com/photo-1549421263-6064833b071b?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80"
+            },
+            {
+                id: 3,
+                title: {
+                    pt: "Projeto de Geração de Renda Mostra Resultados",
+                    en: "Income Generation Project Shows Results"
+                },
+                excerpt: {
+                    pt: "O programa de microcrédito já beneficiou 150 famílias, que agora têm uma fonte de renda estável e podem sustentar seus filhos com dignidade.",
+                    en: "The microcredit program has already benefited 150 families, who now have a stable source of income and can support their children with dignity."
+                },
+                date: {
+                    pt: "20 de Setembro, 2023",
+                    en: "September 20, 2023"
+                },
+                image: "https://images.unsplash.com/photo-1532629345422-7515f3d16bb6?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80"
+            },
+            {
+                id: 4,
+                title: {
+                    pt: "Resposta de Emergência a Desastre Natural",
+                    en: "Emergency Response to Natural Disaster"
+                },
+                excerpt: {
+                    pt: "Nossa equipe de resposta rápida atuou em uma região afetada por inundações, fornecendo abrigo, alimentos e assistência médica a mais de 500 famílias.",
+                    en: "Our rapid response team worked in a region affected by floods, providing shelter, food, and medical assistance to more than 500 families."
+                },
+                date: {
+                    pt: "5 de Setembro, 2023",
+                    en: "September 5, 2023"
+                },
+                image: "https://images.unsplash.com/photo-1582213782117-d783d3c16a2d?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80"
+            },
+            {
+                id: 5,
+                title: {
+                    pt: "Campanha de Natal 2023",
+                    en: "Christmas Campaign 2023"
+                },
+                excerpt: {
+                    pt: "Estamos preparando nossa campanha de Natal que levará alegria e presentes para mais de 5.000 crianças em situação de vulnerabilidade.",
+                    en: "We are preparing our Christmas campaign that will bring joy and gifts to more than 5,000 children in vulnerable situations."
+                },
+                date: {
+                    pt: "28 de Agosto, 2023",
+                    en: "August 28, 2023"
+                },
+                image: "https://images.unsplash.com/photo-1544717301-9cdcb1f5940f?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80"
+            },
+            {
+                id: 6,
+                title: {
+                    pt: "Treinamento de Líderes Comunitários",
+                    en: "Community Leaders Training"
+                },
+                excerpt: {
+                    pt: "Realizamos um treinamento intensivo para 50 líderes comunitários, capacitando-os para multiplicar o discipulado em suas regiões.",
+                    en: "We conducted an intensive training for 50 community leaders, empowering them to multiply discipleship in their regions."
+                },
+                date: {
+                    pt: "15 de Agosto, 2023",
+                    en: "August 15, 2023"
+                },
+                image: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80"
+            }
+        ];
+        
+        let visiblePosts = 3;
+        
+        // Função para carregar posts
+        function loadBlogPosts() {
+            const blogPostsContainer = document.getElementById('blogPosts');
+            blogPostsContainer.innerHTML = '';
+            
+            for (let i = 0; i < Math.min(visiblePosts, blogPosts.length); i++) {
+                const post = blogPosts[i];
+                const postElement = document.createElement('div');
+                postElement.className = 'blog-post';
+                postElement.innerHTML = `
+                    <div class="blog-image">
+                        <img src="${post.image}" alt="${post.title[currentLanguage]}">
+                    </div>
+                    <div class="blog-content">
+                        <div class="blog-date">${post.date[currentLanguage]}</div>
+                        <h3 class="blog-title">${post.title[currentLanguage]}</h3>
+                        <p class="blog-excerpt">${post.excerpt[currentLanguage]}</p>
+                        <a href="#" class="read-more" data-pt="Ler mais" data-en="Read more">${currentLanguage === 'pt' ? 'Ler mais' : 'Read more'} <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                `;
+                blogPostsContainer.appendChild(postElement);
+            }
+            
+            // Mostrar/ocultar botão "Carregar Mais"
+            const loadMoreBtn = document.getElementById('loadMoreBtn');
+            if (visiblePosts >= blogPosts.length) {
+                loadMoreBtn.style.display = 'none';
+            } else {
+                loadMoreBtn.style.display = 'inline-block';
+            }
+        }
+        
+        // Carregar posts iniciais
+        loadBlogPosts();
+        
+        // Carregar mais posts
+        document.getElementById('loadMoreBtn').addEventListener('click', function() {
+            visiblePosts += 3;
+            loadBlogPosts();
+        });
+        
+        // Smooth scroll para links internos
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 70,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Configurar evento do botão de idioma
+        document.getElementById('languageToggle').addEventListener('click', toggleLanguage);
+    </script>
+</body>
+</html>
