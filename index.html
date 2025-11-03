@@ -847,6 +847,21 @@
             
             // Atualizar o atributo lang do HTML
             document.documentElement.lang = currentLanguage;
+            
+            // Atualizar texto do botão de idioma (se existir)
+            const languageToggle = document.getElementById('languageToggle');
+            if (languageToggle) {
+                const languageText = languageToggle.querySelector('span');
+                if (languageText) {
+                    // Exibir 'EN' quando a página estiver em português (ou seja, botão mostra a opção a trocar)
+                    languageText.textContent = currentLanguage === 'pt' ? 'EN' : 'PT';
+                }
+            }
+
+            // Re-renderizar posts do blog no idioma atual (se a função existir)
+            if (typeof loadBlogPosts === 'function') {
+                loadBlogPosts();
+            }
         }
         
         // Menu Mobile
@@ -865,21 +880,30 @@
             });
         });
         
-        // Selecionar valor de doação
+        // Selecionar valor de doação (com checagens de existência)
         function selectDonation(amount) {
-            document.getElementById('amount').value = amount;
-            document.getElementById('donate').scrollIntoView({ behavior: 'smooth' });
+            const amountInput = document.getElementById('amount');
+            if (amountInput) {
+                amountInput.value = amount;
+            }
+            const donateSection = document.getElementById('donate');
+            if (donateSection) {
+                donateSection.scrollIntoView({ behavior: 'smooth' });
+            }
         }
-        
-        // Formulário de doação
-        document.getElementById('donationForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            const message = currentLanguage === 'pt' 
-                ? 'Obrigado pela sua doação! Em breve enviaremos um e-mail com as instruções para finalizar o pagamento.'
-                : 'Thank you for your donation! We will soon send an email with instructions to complete the payment.';
-            alert(message);
-            this.reset();
-        });
+
+        // Formulário de doação (aplicar listener apenas se o elemento existir)
+        const donationForm = document.getElementById('donationForm');
+        if (donationForm) {
+            donationForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                const message = currentLanguage === 'pt'
+                    ? 'Obrigado pela sua doação! Em breve enviaremos um e-mail com as instruções para finalizar o pagamento.'
+                    : 'Thank you for your donation! We will soon send an email with instructions to complete the payment.';
+                alert(message);
+                this.reset();
+            });
+        }
         
         // Dados do boletim (simulando um banco de dados)
         const blogPosts = [
