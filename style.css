@@ -701,3 +701,61 @@ footer {
 @media (max-width: 768px) {
     .carousel-slide img { height: 220px; }
 }
+
+/* Lightbox / Modal for carousel images */
+.lightbox-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.75);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.25s ease;
+}
+
+.lightbox-overlay.open {
+    opacity: 1;
+    visibility: visible;
+}
+
+.lightbox-content {
+    /* Slightly smaller modal so it doesn't take up the whole viewport */
+    max-width: 85vw;
+    max-height: 70vh; /* reduced height */
+    position: relative;
+}
+
+.lightbox-content img {
+    /* Preserve image aspect ratio: allow width to scale up to container but limit by height */
+    width: auto;
+    max-width: 100%;
+    max-height: 68vh; /* keep image a little smaller than container */
+    display: block;
+    margin: 0 auto;
+    border-radius: 6px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.6);
+}
+
+.lightbox-close {
+    position: absolute;
+    top: -10px;
+    right: -10px;
+    background: rgba(0,0,0,0.6);
+    color: white;
+    border: none;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 1.1rem;
+}
+
+@media (max-width: 480px) {
+    .lightbox-close { width: 32px; height: 32px; font-size: 1rem; }
+}

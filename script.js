@@ -122,106 +122,157 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 // --- Carousel: popula imagens da pasta images/ e adiciona controles ---
+// Inicializa o carrossel a partir de um manifesto JSON (images/list.json)
 (function() {
-    const imageFiles = [
-        'images/wide.jpeg',
-        'images/WhatsApp Image 2025-11-14 at 21.40.53.jpeg',
-        'images/WhatsApp Image 2025-11-14 at 21.40.53 (1).jpeg',
-        'images/WhatsApp Image 2025-11-14 at 21.40.52.jpeg',
-        'images/WhatsApp Image 2025-11-14 at 21.40.52 (1).jpeg',
-        'images/WhatsApp Image 2025-11-14 at 21.40.51.jpeg',
-        'images/WhatsApp Image 2025-11-14 at 21.40.50.jpeg'
-    ];
+    const manifestUrl = 'images/list.json';
+    fetch(manifestUrl)
+        .then(res => {
+            if (!res.ok) throw new Error('Não foi possível buscar ' + manifestUrl);
+            return res.json();
+        })
+        .then(imageFiles => {
+            if (!Array.isArray(imageFiles) || imageFiles.length === 0) return;
+            initCarousel(imageFiles);
+        })
+        .catch(err => {
+            console.error('Erro carregando manifesto de imagens:', err);
+        });
 
-    const track = document.getElementById('carouselTrack');
-    const prevBtn = document.getElementById('carouselPrev');
-    const nextBtn = document.getElementById('carouselNext');
-    const indicators = document.getElementById('carouselIndicators');
-    if (!track) return;
+    function initCarousel(imageFiles) {
+        const track = document.getElementById('carouselTrack');
+        const prevBtn = document.getElementById('carouselPrev');
+        const nextBtn = document.getElementById('carouselNext');
+        const indicators = document.getElementById('carouselIndicators');
+        if (!track) return;
 
-    let currentIndex = 0;
-    let autoplayTimer = null;
-    const AUTOPLAY_MS = 5000;
+        let currentIndex = 0;
+        let autoplayTimer = null;
+        const AUTOPLAY_MS = 5000;
 
-    // Cria slides
-    imageFiles.forEach((src, idx) => {
-        const slide = document.createElement('div');
-        slide.className = 'carousel-slide';
-        slide.setAttribute('role', 'listitem');
+        // Cria lightbox/modal elements
+        const lightbox = document.createElement('div');
+        lightbox.className = 'lightbox-overlay';
+        lightbox.innerHTML = `<div class="lightbox-content"><button class="lightbox-close" aria-label="Fechar">&times;</button><img src="" alt=""></div>`;
+        document.body.appendChild(lightbox);
 
-        const img = document.createElement('img');
-    img.src = encodeURI(src);
-        img.alt = `Galeria ${idx + 1}`;
-        img.loading = 'lazy';
+        const lightboxImg = lightbox.querySelector('img');
+        const lightboxClose = lightbox.querySelector('.lightbox-close');
 
-        slide.appendChild(img);
-        track.appendChild(slide);
+        let lightboxOpen = false;
 
-        // indicator
-        if (indicators) {
-            const btn = document.createElement('button');
-            btn.setAttribute('aria-label', `Ir para a imagem ${idx + 1}`);
-            btn.addEventListener('click', () => {
-                goToSlide(idx);
-            });
-            indicators.appendChild(btn);
+        function openLightbox(src, alt) {
+            lightboxImg.src = src;
+            lightboxImg.alt = alt || '';
+            lightbox.classList.add('open');
+            lightboxOpen = true;
+            // pause autoplay
+            if (autoplayTimer) clearInterval(autoplayTimer);
         }
-    });
 
-    const slides = track.querySelectorAll('.carousel-slide');
+        function closeLightbox() {
+            lightbox.classList.remove('open');
+            lightboxImg.src = '';
+            lightboxOpen = false;
+            // resume autoplay
+            startAutoplay();
+        }
 
-    function updateIndicators() {
-        if (!indicators) return;
-        const dots = indicators.querySelectorAll('button');
-        dots.forEach((d, i) => d.classList.toggle('active', i === currentIndex));
-    }
+        lightbox.addEventListener('click', (e) => {
+            // close if clicked outside image content
+            if (e.target === lightbox || e.target === lightboxClose) closeLightbox();
+        });
 
-    function goToSlide(index) {
-        if (index < 0) index = slides.length - 1;
-        if (index >= slides.length) index = 0;
-        currentIndex = index;
-        const offset = -currentIndex * track.clientWidth;
-        track.style.transform = `translateX(${offset}px)`;
+        document.addEventListener('keydown', (e) => {
+            if (!lightboxOpen) return;
+            if (e.key === 'Escape') closeLightbox();
+        });
+
+        // Cria slides
+        imageFiles.forEach((src, idx) => {
+            const slide = document.createElement('div');
+            slide.className = 'carousel-slide';
+            slide.setAttribute('role', 'listitem');
+
+            const img = document.createElement('img');
+            img.src = encodeURI(src);
+            img.alt = 'Galeria de fotos';
+            img.loading = 'lazy';
+
+            slide.appendChild(img);
+            // abrir lightbox ao clicar na imagem
+            img.style.cursor = 'zoom-in';
+            img.addEventListener('click', () => {
+                openLightbox(img.src, img.alt);
+            });
+            track.appendChild(slide);
+
+            // indicator
+            if (indicators) {
+                const btn = document.createElement('button');
+                btn.setAttribute('aria-label', `Ir para a imagem ${idx + 1}`);
+                btn.addEventListener('click', () => {
+                    goToSlide(idx);
+                });
+                indicators.appendChild(btn);
+            }
+        });
+
+        const slides = track.querySelectorAll('.carousel-slide');
+
+        function updateIndicators() {
+            if (!indicators) return;
+            const dots = indicators.querySelectorAll('button');
+            dots.forEach((d, i) => d.classList.toggle('active', i === currentIndex));
+        }
+
+        function goToSlide(index) {
+            if (index < 0) index = slides.length - 1;
+            if (index >= slides.length) index = 0;
+            currentIndex = index;
+            const offset = -currentIndex * track.clientWidth;
+            track.style.transform = `translateX(${offset}px)`;
+            updateIndicators();
+            resetAutoplay();
+        }
+
+        function prevSlide() { goToSlide(currentIndex - 1); }
+        function nextSlide() { goToSlide(currentIndex + 1); }
+
+        if (prevBtn) prevBtn.addEventListener('click', prevSlide);
+        if (nextBtn) nextBtn.addEventListener('click', nextSlide);
+
+        // teclado (não navegar quando lightbox estiver aberto)
+        document.addEventListener('keydown', (e) => {
+            if (lightboxOpen) return; // ignore arrow keys while modal open
+            if (e.key === 'ArrowLeft') prevSlide();
+            if (e.key === 'ArrowRight') nextSlide();
+        });
+
+        // autoplay
+        function startAutoplay() {
+            autoplayTimer = setInterval(() => {
+                nextSlide();
+            }, AUTOPLAY_MS);
+        }
+        function resetAutoplay() {
+            if (autoplayTimer) clearInterval(autoplayTimer);
+            startAutoplay();
+        }
+
+        // ajustar largura do track quando redimensionar
+        window.addEventListener('resize', () => {
+            // reposicionar corretamente
+            track.style.transition = 'none';
+            const offset = -currentIndex * track.clientWidth;
+            track.style.transform = `translateX(${offset}px)`;
+            // forçar reflow e restaurar transição
+            void track.offsetWidth;
+            track.style.transition = '';
+        });
+
+        // iniciar
         updateIndicators();
-        resetAutoplay();
-    }
-
-    function prevSlide() { goToSlide(currentIndex - 1); }
-    function nextSlide() { goToSlide(currentIndex + 1); }
-
-    if (prevBtn) prevBtn.addEventListener('click', prevSlide);
-    if (nextBtn) nextBtn.addEventListener('click', nextSlide);
-
-    // teclado
-    document.addEventListener('keydown', (e) => {
-        if (e.key === 'ArrowLeft') prevSlide();
-        if (e.key === 'ArrowRight') nextSlide();
-    });
-
-    // autoplay
-    function startAutoplay() {
-        autoplayTimer = setInterval(() => {
-            nextSlide();
-        }, AUTOPLAY_MS);
-    }
-    function resetAutoplay() {
-        if (autoplayTimer) clearInterval(autoplayTimer);
+        goToSlide(0);
         startAutoplay();
     }
-
-    // ajustar largura do track quando redimensionar
-    window.addEventListener('resize', () => {
-        // reposicionar corretamente
-        track.style.transition = 'none';
-        const offset = -currentIndex * track.clientWidth;
-        track.style.transform = `translateX(${offset}px)`;
-        // forçar reflow e restaurar transição
-        void track.offsetWidth;
-        track.style.transition = '';
-    });
-
-    // iniciar
-    updateIndicators();
-    goToSlide(0);
-    startAutoplay();
 })();
